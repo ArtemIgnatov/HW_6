@@ -1,17 +1,18 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 
 namespace HW_6
 {
+
     internal class Program
     {
-        static void Main(string[] args)
+        private static void AddData() //метод по добавлению данных в файл
         {
-            using(StreamWriter sw = new StreamWriter("artem.csv", true, Encoding.Unicode))
+            using (StreamWriter sw = new StreamWriter("artem.csv", true, Encoding.Unicode))
             {
                 char key = 'д';
                 int id = 0;
@@ -47,7 +48,10 @@ namespace HW_6
                     key = Console.ReadKey(true).KeyChar;
                 } while (char.ToLower(key) == 'д');
             }
+        }
 
+        private static void ShowData() //метод по выводу данных
+        {
             using (StreamReader sr = new StreamReader("artem.csv", Encoding.Unicode))
             {
                 string line;
@@ -60,7 +64,40 @@ namespace HW_6
                 }
 
             }
-            Console.ReadKey();
+        }
+
+        private static void ShowChoose() //метод по выводу на экран стартового окна с выбором действий
+        {
+            Console.WriteLine(
+                "Выерите вариант введя число:\n" +
+                "1 - вывести данные\n" +
+                "2 - добавить запись\n" +
+                "3 - выход из програмы");
+        }
+
+        static void Main(string[] args)
+        {
+            while (true)
+                {
+                    ShowChoose();
+                    var action  = Console.ReadLine();
+
+                    switch (action)
+                    {
+                        case "1":
+                            ShowData();
+                            break;
+                        case "2":
+                            AddData();
+                            break;
+                        case"3":
+                        goto end; //переходим на метку завершающую программу
+                        default:
+                            Console.WriteLine("Некорректный ввод действия, введите 1 или 2\n");
+                            break;
+                    }
+                }
+            end:; //наша метка
         }
     }
 }
